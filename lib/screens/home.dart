@@ -1,16 +1,16 @@
+import 'dart:developer';
 import 'dart:io';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../Dilaogs/action_dialog.dart';
-import '../Dilaogs/cupertino_action_dialog.dart';
 import '../Provider/main_provider.dart';
-import '../screens/add_new_note.dart';
+import '../screens/add_new_todo.dart';
 import '../widgets/parent_widget.dart';
-import '../widgets/todo_item.dart';
-import '../model/add_new_note_arg.dart';
+import '../model/add_new_todo_arg.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import '../widgets/todo_list.dart';
-import 'add_new_note.dart';
+import 'add_new_todo.dart';
 
 class Home extends StatefulWidget {
   static const String id = 'Home_Screen';
@@ -28,12 +28,41 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     _mainProvider = Provider.of<MainProvider>(context, listen: false);
-    _mainProvider.getAllNotes();
+    _mainProvider.getTodos();
   }
 
   @override
   Widget build(BuildContext context) {
+    final mainProvider = Provider.of<MainProvider>(context);
     return MyParentWidget(
+      actions: [
+        TextButton(
+          onPressed: () async {showDialog(
+              context: context,
+              builder: (context) => ActionDialog(
+                content: 'Do you want to delete all todos ?',
+                cancelAction: 'No',
+                onCancelClick: () {
+                  Navigator.pop(context);
+                },
+                approveAction: 'Yes',
+                onApproveClick: () async {
+                  Navigator.pop(context);
+                  await mainProvider.deleteAllTodo();
+                  Fluttertoast.showToast(msg: 'Todos Deleted');
+                },
+              ));
+          },
+          style: ButtonStyle(
+              foregroundColor: MaterialStateProperty.all<Color>(Colors.white)),
+          child: const Text(
+            'Delete All',
+            style: TextStyle(
+              fontSize: 15,
+            ),
+          ),
+        ),
+      ],
       popCallback: () async {
         showDialog(
             barrierDismissible: false,
@@ -60,7 +89,7 @@ class _HomeState extends State<Home> {
       },
       appbarTitle: 'Home',
       bodyWidget: Consumer<MainProvider>(
-          builder: (c, data, ch) => TodoList(notes: data.notes)),
+          builder: (c, data, ch) => TodoList(todos: data.notes)),
     );
   }
 }

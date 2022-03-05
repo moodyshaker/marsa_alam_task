@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:marsa_alam_task/widgets/title_desc_portion.dart';
-import '../model/note_model.dart';
+import '../model/todo_model.dart';
 import 'date_action_portion.dart';
 
 class MyTodoItem extends StatelessWidget {
-  final NoteModel note;
+  final TodoModel note;
 
   const MyTodoItem({
     Key? key,

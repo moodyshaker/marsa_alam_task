@@ -1,8 +1,8 @@
-import 'note_model.dart';
+import 'todo_model.dart';
 
 class AddNewNoteArg {
   final bool isUpdate;
-  final NoteModel? note;
+  final TodoModel? note;
 
   AddNewNoteArg({required this.isUpdate, this.note});
 }

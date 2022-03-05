@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-class NoteModel {
+class TodoModel {
   int? id;
   String title;
   DateTime date;
   String description;
 
-  NoteModel({
+  TodoModel({
     this.id,
     required this.title,
     required this.date,
     required this.description,
   });
 
-  NoteModel.withId({
+  TodoModel.withId({
     required this.id,
     required this.title,
     required this.date,
@@ -29,8 +29,8 @@ class NoteModel {
     };
   }
 
-  factory NoteModel.fromMap(Map<String, dynamic> map) {
-    return NoteModel.withId(
+  factory TodoModel.fromMap(Map<String, dynamic> map) {
+    return TodoModel.withId(
       id: map['_id'],
       title: map['title'],
       date: DateTime.parse(map['date']),

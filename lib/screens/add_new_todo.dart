@@ -1,7 +1,7 @@
 import '../Dilaogs/action_dialog.dart';
 import '../Provider/main_provider.dart';
-import '../model/add_new_note_arg.dart';
-import '../model/note_model.dart';
+import '../model/add_new_todo_arg.dart';
+import '../model/todo_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -118,7 +118,7 @@ class _AddNewNoteState extends State<AddNewNote> {
                       if (_formState.currentState!.validate()) {
                         _formState.currentState!.save();
                         if (widget.arg.isUpdate) {
-                          await mainProvider.updateNote(NoteModel(
+                          await mainProvider.updateTodo(TodoModel(
                             id: widget.arg.note!.id,
                             title: _title!,
                             date: DateTime.now(),
@@ -126,13 +126,14 @@ class _AddNewNoteState extends State<AddNewNote> {
                           ));
                           Fluttertoast.showToast(msg: 'Note Edited');
                         } else {
-                          await mainProvider.addNewNote(NoteModel(
+                          await mainProvider.addNewTodo(TodoModel(
                             title: _title!,
                             date: DateTime.now(),
                             description: _description!,
                           ));
                           Fluttertoast.showToast(msg: 'Note Added');
                         }
+                        FocusScope.of(context).unfocus();
                         Navigator.pop(context);
                       }
                     },

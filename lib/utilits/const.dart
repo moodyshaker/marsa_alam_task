@@ -4,8 +4,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../model/add_new_note_arg.dart';
-import '../screens/add_new_note.dart';
+import '../model/add_new_todo_arg.dart';
+import '../screens/add_new_todo.dart';
 import '../screens/home.dart';
 import '../screens/splash.dart';
 

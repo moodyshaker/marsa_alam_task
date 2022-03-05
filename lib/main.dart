@@ -20,19 +20,10 @@ class MyApp extends StatelessWidget {
     ]);
     return ChangeNotifierProvider(
       create: (_) => MainProvider(),
-      child: Platform.isIOS
-          ? CupertinoApp(
+      child: MaterialApp(
               debugShowCheckedModeBanner: false,
               initialRoute: SplashScreen.id,
-              title: 'MarsaTask',
-              theme: myIOSAppTheme,
-              routes: routes,
-              onGenerateRoute: getOnGenerateRoute,
-            )
-          : MaterialApp(
-              debugShowCheckedModeBanner: false,
-              initialRoute: SplashScreen.id,
-              theme: myAndroidAppTheme,
+              theme: appTheme,
               title: 'MarsaTask',
               routes: routes,
               onGenerateRoute: getOnGenerateRoute,

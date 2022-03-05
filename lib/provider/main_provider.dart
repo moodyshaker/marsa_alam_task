@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import '../model/note_model.dart';
+import '../model/todo_model.dart';
 import '../storage/storage.dart';
 
 class MainProvider extends ChangeNotifier {
   Storage? _database;
-  List<NoteModel>? _notes = [];
+  List<TodoModel>? _notes = [];
   bool? _notesEmpty;
 
   Future<void> initDatabase() async {
@@ -15,36 +15,36 @@ class MainProvider extends ChangeNotifier {
 
   bool? get notesEmpty => _notesEmpty;
 
-  List<NoteModel>? get notes => _notes;
+  List<TodoModel>? get notes => _notes;
 
-  Future<void> addNewNote(NoteModel model) async {
+  Future<void> addNewTodo(TodoModel model) async {
     await _database?.insert(model);
-    _notes = await _database?.getAllNotes();
+    _notes = await _database?.getAllTodos();
     notifyListeners();
   }
 
-  Future<void> updateNote(NoteModel model) async {
+  Future<void> updateTodo(TodoModel model) async {
     await _database?.update(model);
-    _notes = await _database?.getAllNotes();
+    _notes = await _database?.getAllTodos();
     notifyListeners();
   }
 
-  Future<void> deleteNote(NoteModel model) async {
+  Future<void> deleteTodo(TodoModel model) async {
     await _database?.delete(model);
-    _notes = await _database?.getAllNotes();
+    _notes = await _database?.getAllTodos();
     notifyListeners();
   }
 
-  Future<void> getAllNotes() async {
+  Future<void> getTodos() async {
     _notes = [];
-    _notes = await _database?.getAllNotes();
+    _notes = await _database?.getAllTodos();
     _notesEmpty = _notes?.isEmpty;
     notifyListeners();
   }
 
-  Future<void> deleteAllNote() async {
+  Future<void> deleteAllTodo() async {
     await _database?.deleteAll();
-    _notes = await _database?.getAllNotes();
+    _notes = await _database?.getAllTodos();
     notifyListeners();
   }
 }

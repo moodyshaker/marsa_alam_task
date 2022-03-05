@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../model/note_model.dart';
+import '../model/todo_model.dart';
 
 class TitleDescPortion extends StatelessWidget {
-  final NoteModel note;
+  final TodoModel note;
 
   const TitleDescPortion({required this.note, Key? key}) : super(key: key);
 

@@ -1,5 +1,5 @@
 import 'dart:io';
-import '../model/note_model.dart';
+import '../model/todo_model.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -39,7 +39,7 @@ class Storage {
     );
   }
 
-  Future<void> insert(NoteModel item) async {
+  Future<void> insert(TodoModel item) async {
     Database database = await db;
     await database.insert(
       tableName,
@@ -48,7 +48,7 @@ class Storage {
     );
   }
 
-  Future<void> update(NoteModel item) async {
+  Future<void> update(TodoModel item) async {
     Database database = await db;
     await database.update(
       tableName,
@@ -64,7 +64,7 @@ class Storage {
     database.rawDelete('DELETE FROM $tableName');
   }
 
-  Future<void> delete(NoteModel item) async {
+  Future<void> delete(TodoModel item) async {
     Database database = await db;
     await database.delete(
       tableName,
@@ -73,13 +73,13 @@ class Storage {
     );
   }
 
-  Future<List<NoteModel>> getAllNotes() async {
+  Future<List<TodoModel>> getAllTodos() async {
     Database database = await db;
     List<Map<String, dynamic>> data = await database.rawQuery(
       'SELECT * FROM $tableName ORDER BY $date ASC'
     );
-    List<NoteModel> models = [];
-    models = data.map((e) => NoteModel.fromMap(e)).toList();
+    List<TodoModel> models = [];
+    models = data.map((e) => TodoModel.fromMap(e)).toList();
     return models;
   }
 

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:marsa_alam_task/model/note_model.dart';
+import 'package:marsa_alam_task/model/todo_model.dart';
 import 'package:provider/provider.dart';
 import '../Dilaogs/action_dialog.dart';
 import '../Provider/main_provider.dart';
-import '../model/add_new_note_arg.dart';
-import '../screens/add_new_note.dart';
+import '../model/add_new_todo_arg.dart';
+import '../screens/add_new_todo.dart';
 import 'circle_button.dart';
 
 class ActionPortion extends StatelessWidget {
-  final NoteModel note;
+  final TodoModel note;
 
   const ActionPortion({required this.note, Key? key}) : super(key: key);
 
@@ -34,7 +34,7 @@ class ActionPortion extends StatelessWidget {
                       approveAction: 'Yes',
                       onApproveClick: () async {
                         Navigator.pop(context);
-                        await mainProvider.deleteNote(note);
+                        await mainProvider.deleteTodo(note);
                         Fluttertoast.showToast(msg: 'Note Deleted');
                       },
                     ));

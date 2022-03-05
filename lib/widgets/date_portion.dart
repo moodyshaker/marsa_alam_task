@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../model/note_model.dart';
+import '../model/todo_model.dart';
 
 class DatePortion extends StatelessWidget {
-  final NoteModel note;
+  final TodoModel note;
 
   const DatePortion({required this.note, Key? key}) : super(key: key);
 

@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 class MyParentWidget extends StatelessWidget {
   final String? appbarTitle;
   final Widget bodyWidget;
+  final List<Widget>? actions;
   final GestureTapCallback? onAddIconCallback;
   final WillPopCallback? popCallback;
 
   const MyParentWidget({
     required this.bodyWidget,
     this.onAddIconCallback,
+    this.actions,
     this.popCallback,
     Key? key,
     this.appbarTitle,
@@ -33,6 +35,7 @@ class MyParentWidget extends StatelessWidget {
                 title: Text(
                   appbarTitle!,
                 ),
+                actions: actions,
               )
             : null,
         body: appbarTitle == null ? SafeArea(child: bodyWidget) : bodyWidget,

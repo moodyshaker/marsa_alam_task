@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import '../model/note_model.dart';
+import '../model/todo_model.dart';
 import 'todo_item.dart';
 
 class TodoList extends StatelessWidget {
-  final List<NoteModel>? notes;
+  final List<TodoModel>? todos;
 
-  const TodoList({required this.notes, Key? key}) : super(key: key);
+  const TodoList({required this.todos, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class TodoList extends StatelessWidget {
                     : 3,
             childAspectRatio: 1),
         padding: const EdgeInsets.all(8.0),
-        itemCount: notes!.length,
-        itemBuilder: (BuildContext ctx, int i) => MyTodoItem(note: notes![i]));
+        itemCount: todos!.length,
+        itemBuilder: (BuildContext ctx, int i) => MyTodoItem(note: todos![i]));
   }
 }
