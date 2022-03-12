@@ -23,6 +23,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   late MainProvider _mainProvider;
+  int _selectedIndex = 0;
 
   @override
   void initState() {
@@ -37,21 +38,22 @@ class _HomeState extends State<Home> {
     return MyParentWidget(
       actions: [
         TextButton(
-          onPressed: () async {showDialog(
-              context: context,
-              builder: (context) => ActionDialog(
-                content: 'Do you want to delete all todos ?',
-                cancelAction: 'No',
-                onCancelClick: () {
-                  Navigator.pop(context);
-                },
-                approveAction: 'Yes',
-                onApproveClick: () async {
-                  Navigator.pop(context);
-                  await mainProvider.deleteAllTodo();
-                  Fluttertoast.showToast(msg: 'Todos Deleted');
-                },
-              ));
+          onPressed: () async {
+            showDialog(
+                context: context,
+                builder: (context) => ActionDialog(
+                      content: 'Do you want to delete all todos ?',
+                      cancelAction: 'No',
+                      onCancelClick: () {
+                        Navigator.pop(context);
+                      },
+                      approveAction: 'Yes',
+                      onApproveClick: () async {
+                        Navigator.pop(context);
+                        await mainProvider.deleteAllTodo();
+                        Fluttertoast.showToast(msg: 'Todos Deleted');
+                      },
+                    ));
           },
           style: ButtonStyle(
               foregroundColor: MaterialStateProperty.all<Color>(Colors.white)),
@@ -88,8 +90,63 @@ class _HomeState extends State<Home> {
             arguments: AddNewNoteArg(isUpdate: false, note: null));
       },
       appbarTitle: 'Home',
-      bodyWidget: Consumer<MainProvider>(
-          builder: (c, data, ch) => TodoList(todos: data.notes)),
+      bodyWidget: Column(
+        children: [
+          Wrap(
+            spacing: 10.0,
+            runSpacing: 4.0,
+            children: List.generate(
+                10,
+                (i) => GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _selectedIndex = i;
+                        });
+                        log('index $i deleted');
+                      },
+                      child: Chip(
+                        shadowColor: _selectedIndex == i ? Colors.orange.withOpacity(0.3) : Colors.black.withOpacity(0.3),
+                        backgroundColor:
+                            _selectedIndex == i ? Colors.orange : Colors.grey[100],
+                        label: i == 0
+                            ? Text(
+                                'غير مكتملة',
+                                style: TextStyle(
+                                    color: _selectedIndex == i
+                                        ? Colors.white
+                                        : Colors.black),
+                              )
+                            : i == 1
+                                ? Text('في الطريق',
+                                    style: TextStyle(
+                                        color: _selectedIndex == i
+                                            ? Colors.white
+                                            : Colors.black))
+                                : i == 2
+                                    ? Text('في انتظار التوصيل',
+                                        style: TextStyle(
+                                            color: _selectedIndex == i
+                                                ? Colors.white
+                                                : Colors.black))
+                                    : Text('جديدة',
+                                        style: TextStyle(
+                                            color: _selectedIndex == i
+                                                ? Colors.white
+                                                : Colors.black)),
+                        avatar: Image.asset(
+                          'assets/app_logo.png',
+                          width: 10.0,
+                          height: 10.0,
+                        ),
+                      ),
+                    )),
+          ),
+          Expanded(
+            child: Consumer<MainProvider>(
+                builder: (c, data, ch) => TodoList(todos: data.notes)),
+          ),
+        ],
+      ),
     );
   }
 }
